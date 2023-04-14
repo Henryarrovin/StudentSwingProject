@@ -24,7 +24,7 @@ public class LoginContainer extends JFrame implements ActionListener{
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection=DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/student","root","henryasarrovin");
+                    "jdbc:mysql://0.tcp.in.ngrok.io:19873/student","root","henryasarrovin");
             statement=connection.createStatement();
         }catch (Exception ex){
             ex.printStackTrace();
@@ -112,7 +112,6 @@ public class LoginContainer extends JFrame implements ActionListener{
             }catch (Exception ex){
                 ex.printStackTrace();
             }
-            //assert t1 != null;
             if (Objects.equals(t1,tName.getText()) ||
                     Objects.equals(t2, tUName.getText()) ||
                     Objects.equals(t7, tPswd.getPassword())){
@@ -122,10 +121,7 @@ public class LoginContainer extends JFrame implements ActionListener{
                 detailsContainer.setSize(430,500);
                 detailsContainer.setVisible(true);
                 dispose();
-            } /*else if (tName.getText() == null || tUName.getText() == null || tPswd.getPassword() == null ) {
-                LoginContainer loginContainer=new LoginContainer();
-                JOptionPane.showMessageDialog(loginContainer, "Please fill all the fields!");
-            }*/ else {
+            }  else {
                 tPswd.getPassword();
                 LoginContainer loginContainer=new LoginContainer();
                 JOptionPane.showMessageDialog(loginContainer, "please fill in the credentials properly!");

@@ -24,7 +24,7 @@ public class SignUpContainer extends JFrame implements ActionListener {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection=DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/student","root","henryasarrovin");
+                    "jdbc:mysql://0.tcp.in.ngrok.io:19873/student","root","henryasarrovin");
             statement=connection.createStatement();
         }catch (Exception ex){
            ex.printStackTrace();
