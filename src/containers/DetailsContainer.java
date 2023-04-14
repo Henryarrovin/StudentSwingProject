@@ -4,14 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DetailsContainer extends JFrame implements ActionListener {
     JLabel name,userName,dept,section,dob,dor;
     JTextField tName,tUName,tDept,tSection,tDob,tDor;
-    JButton logOut;
+    JButton logOut,update,save,delete;
     Connection connection;
     Statement statement;
     String tNameFromLogin,tUNameFromLogin,tDeptFromLogin,tSectionFromLogin,tDobFromLogin,tDorFromLogin;
@@ -26,7 +24,7 @@ public class DetailsContainer extends JFrame implements ActionListener {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection=DriverManager.getConnection(
-                    "jdbc:mysql://0.tcp.in.ngrok.io:19873/student","root","henryasarrovin");
+                    "jdbc:mysql://localhost:3306/student","root","henryasarrovin");
             statement=connection.createStatement();
         }catch (Exception ex){
             ex.printStackTrace();
@@ -96,16 +94,62 @@ public class DetailsContainer extends JFrame implements ActionListener {
         container.add(tDor);
 
         logOut=new JButton("Log Out");
-        logOut.setBounds(140,390,150,40);
+        logOut.setBounds(40,350,150,40);
         logOut.setBackground(Color.WHITE);
         container.add(logOut);
         logOut.addActionListener(this);
+
+        update=new JButton("update");
+        update.setBounds(200,350,150,40);
+        update.setBackground(Color.WHITE);
+        container.add(update);
+        update.addActionListener(this);
+
+        save=new JButton("save");
+        save.setBounds(40,400,150,40);
+        save.setBackground(Color.WHITE);
+        container.add(save);
+        save.addActionListener(this);
+
+        delete=new JButton("delete");
+        delete.setBounds(200,400,150,40);
+        delete.setBackground(Color.WHITE);
+        container.add(delete);
+        delete.addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String s=e.getActionCommand();
         if (s.equals("Log Out")){
+            LoginContainer loginContainer=new LoginContainer();
+            loginContainer.setTitle("login page");
+            loginContainer.setSize(430,300);
+            loginContainer.setVisible(true);
+            dispose();
+        } else if (s.equals("update")) {
+            tName.setEditable(true);
+            tDept.setEditable(true);
+            tSection.setEditable(true);
+            tDob.setEditable(true);
+        } else if (s.equals("save")) {
+            try{
+                statement.execute("update studentdb set  fName='"+tName.getText()
+                        +"', dept='"+tDept.getText()+"', section='"+tSection.getText()+"', dob='"+tDob.getText()
+                        +"' where lName='"+tUName.getText()+"';");
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
+            tName.setEditable(false);
+            tDept.setEditable(false);
+            tSection.setEditable(false);
+            tDob.setEditable(false);
+        } else if (s.equals("delete")) {
+            try {
+                statement.execute("DELETE FROM studentdb WHERE lName='"+tUName.getText()+"';");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
             LoginContainer loginContainer=new LoginContainer();
             loginContainer.setTitle("login page");
             loginContainer.setSize(430,300);

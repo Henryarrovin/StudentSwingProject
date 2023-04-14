@@ -12,7 +12,7 @@ public class LoginContainer extends JFrame implements ActionListener{
     JLabel name,userName,pswd,lSignPage;
     JPasswordField tPswd;
     JTextField tName,tUName;
-    JButton login,signUp;
+    JButton login,signUp,refresh;
 
     Connection connection;
     Statement statement;
@@ -24,7 +24,7 @@ public class LoginContainer extends JFrame implements ActionListener{
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection=DriverManager.getConnection(
-                    "jdbc:mysql://0.tcp.in.ngrok.io:19873/student","root","henryasarrovin");
+                    "jdbc:mysql://localhost:3306/student","root","henryasarrovin");
             statement=connection.createStatement();
         }catch (Exception ex){
             ex.printStackTrace();
@@ -60,10 +60,16 @@ public class LoginContainer extends JFrame implements ActionListener{
         container.add(tPswd);
 
         login=new JButton("login");
-        login.setBounds(180,180,100,30);
+        login.setBounds(150,180,100,30);
         login.setBackground(Color.WHITE);
         container.add(login);
         login.addActionListener(this);
+
+        refresh=new JButton("refresh");
+        refresh.setBounds(250,180,100,30);
+        refresh.setBackground(Color.WHITE);
+        container.add(refresh);
+        refresh.addActionListener(this);
 
         lSignPage=new JLabel("Don't have an account?");
         lSignPage.setBounds(100,220,150,30);
@@ -118,7 +124,7 @@ public class LoginContainer extends JFrame implements ActionListener{
 
                 DetailsContainer detailsContainer=new DetailsContainer(t1,t2,t3,t4,t5,t6);
                 detailsContainer.setTitle("STUDENT");
-                detailsContainer.setSize(430,500);
+                detailsContainer.setSize(430,510);
                 detailsContainer.setVisible(true);
                 dispose();
             }  else {
@@ -126,6 +132,10 @@ public class LoginContainer extends JFrame implements ActionListener{
                 LoginContainer loginContainer=new LoginContainer();
                 JOptionPane.showMessageDialog(loginContainer, "please fill in the credentials properly!");
             }
+        } else if (s.equals("refresh")) {
+            tName.setText(null);
+            tUName.setText(null);
+            tPswd.setText(null);
         }
     }
 }

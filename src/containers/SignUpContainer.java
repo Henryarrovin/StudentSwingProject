@@ -24,7 +24,7 @@ public class SignUpContainer extends JFrame implements ActionListener {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection=DriverManager.getConnection(
-                    "jdbc:mysql://0.tcp.in.ngrok.io:19873/student","root","henryasarrovin");
+                    "jdbc:mysql://localhost:3306/student","root","henryasarrovin");
             statement=connection.createStatement();
         }catch (Exception ex){
            ex.printStackTrace();
@@ -159,7 +159,7 @@ public class SignUpContainer extends JFrame implements ActionListener {
                     DetailsContainer detailsContainer=new DetailsContainer(tName.getText(),tUName.getText(),
                             tDept.getText(),tSection.getText(),tDob.getText(),tDor.getText());
                     detailsContainer.setTitle("STUDENT");
-                    detailsContainer.setSize(430,500);
+                    detailsContainer.setSize(430,510);
                     detailsContainer.setVisible(true);
                     dispose();
                 }
